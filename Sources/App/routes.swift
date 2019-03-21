@@ -1,20 +1,15 @@
 import Vapor
 
-/// Register your application's routes here.
 public func routes(_ router: Router) throws {
-    // Basic "It works" example
-    router.get { req in
-        return "It works!"
-    }
+    let mockController = MockController()
     
-    // Basic "Hello, world!" example
-    router.get("hello") { req in
-        return "Hello, world!"
-    }
-
-    // Example of configuring a controller
-    let todoController = TodoController()
-    router.get("todos", use: todoController.index)
-    router.post("todos", use: todoController.create)
-    router.delete("todos", Todo.parameter, use: todoController.delete)
+    router.get("mocks", use: mockController.index)
+    router.post("mocks", use: mockController.create)
+    router.delete("mocks", use: mockController.delete)
+    
+    router.get(all, use: mockController.respond)
+    router.post(all, use: mockController.respond)
+    router.put(all, use: mockController.respond)
+    router.delete(all, use: mockController.respond)
+    router.patch(all, use: mockController.respond)
 }
